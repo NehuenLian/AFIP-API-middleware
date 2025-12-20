@@ -21,7 +21,7 @@ Este sistema es un servicio web que actúa como middleware entre sistemas POS lo
 
 ## ¿Stateless?
 
-Parcialmente. El servicio no almacena información transaccional ni de estado entre solicitudes, salvo por el token de autenticación que persiste en memoria durante 12 horas (hasta que se necesite generar otro) y se reutiliza para todas las facturas emitidas en ese período.
+El servicio no almacena información transaccional ni de estado entre solicitudes, solo el ticket de acceso que persiste en disco durante 12 horas (hasta que se necesite generar otro) y se reutiliza para todas las facturas emitidas en ese período.
 
 ## Arquitectura y Estructura del Proyecto
 
