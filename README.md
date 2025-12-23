@@ -1,7 +1,7 @@
 ![human-coded](https://badgen.net/static/Human%20Coded/100%25/green)
 # SOAP Web Invoicing Service for Point of Sale with Integration to the Argentine Tax Agency
 
-This system is a web service that acts as middleware between local POS systems and AFIP (Administración Federal de Ingresos Públicos) / ARCA (Customs Revenue and Control Agency), the tax authority in Argentina. It receives invoices in JSON format, transforms them into XML compatible with AFIP/ARCA Web Services, sends the request via SOAP, processes the response, and returns the result to the POS in JSON format. It also automatically handles certain common invoicing errors. The goal is to simplify tax compliance from desktop applications.
+This system is a web service that acts as middleware between local POS systems and AFIP (Administración Federal de Ingresos Públicos) / ARCA (Customs Revenue and Control Agency), the tax authority in Argentina. It receives invoices in JSON format, transforms them into XML compatible with AFIP/ARCA Web Services, sends the request via SOAP, processes the response, and returns the result to the POS in JSON format. The goal is to simplify tax compliance from desktop applications.
 
 [![Python](https://img.shields.io/badge/python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![lxml](https://img.shields.io/badge/lxml-5.4.0-orange)](https://pypi.org/project/lxml/)
@@ -38,12 +38,10 @@ INVOICE_SERVICE
 │   ├── controllers/
 │   ├── crypto/
 │   ├── payload_builder/
-│   ├── response_errors_handler/
 │   ├── soap_management/
 │   ├── time/
 │   ├── utils/
 │   └── xml_management/
-├── exceptions.py  
 ├── .gitignore  
 ├── main.py  
 ├── README_English.md  
@@ -60,16 +58,13 @@ Contains the POST endpoint that receives the JSON with sales and invoice informa
 Stores certificates, private keys, CSRs, and other cryptographic elements needed to sign the access ticket request.
 
 ### `controllers/`
-Contains controllers separated by SOAP service. Each controller handles a specific service.
+Contains controllers separated by SOAP method. Each controller handles a specific method.
 
 ### `crypto/`
 Contains the module that signs the access ticket request using the elements from the `certificates` folder.
 
 ### `payload_builder/`
 Contains the module that builds and manipulates the dictionaries (`dict`) required by the Zeep library to consume SOAP services.
-
-### `response_errors_handler/`
-This module contains a function that receives error codes along with their respective specialized handlers, which attempt to resolve these errors automatically. The module can be extended as new types of errors are discovered.
 
 ### `soap_management/`
 Handles communication with AFIP/ARCA SOAP services and parses the responses looking for errors. Errors usually appear as an array at the end of the response.
@@ -82,9 +77,6 @@ Contains general helper functions: logger, existence validation, among others.
 
 ### `xml_management/`
 Stores the XML files required for the service to function and contains all necessary functions to build and manipulate these files.
-
-### `exceptions.py`
-Contains the custom exceptions of the service.
 
 ## Main Dependencies
 
@@ -187,8 +179,6 @@ The file `soap_client.py` contains calls to 3 of the AFIP/ARCA SOAP services (th
     - `token`: Current access token.
     - `sign`: Digital signature.
     - `cuit`: CUIT of the issuing company.
-  
-  This service is used to resolve error `10016` (see `service/response_errors_handler/error_handler.py`), by requesting the current invoice number to add it to the invoice to be approved after it was rejected with this error attached.
 
 ---
 
@@ -261,59 +251,6 @@ The file `soap_client.py` contains calls to 3 of the AFIP/ARCA SOAP services (th
                 'Observaciones': None,
                 'CAE': None,
                 'CAEFchVto': None
-            }
-        ]
-    },
-    'Events': None,
-    'Errors': {
-        'Err': [
-            {
-                'Code': 10016,
-                'Msg': 'El numero o fecha del comprobante no se corresponde con el proximo a autorizar. Consultar metodo FECompUltimoAutorizado.'
-            }
-        ]
-    }
-}
-2025-08-16 14:49:57,513 - INFO - Verifying if the response has errors...
-2025-08-16 14:49:57,514 - INFO - Errors identified in the response.
-2025-08-16 14:49:57,514 - INFO - Response has errors. Resolving...
-2025-08-16 14:49:57,514 - DEBUG - Error code: 10016
-2025-08-16 14:49:57,514 - DEBUG - Error message: El numero o fecha del comprobante no se corresponde con el proximo a autorizar. Consultar metodo FECompUltimoAutorizado.
-2025-08-16 14:49:57,514 - INFO - Starting invoice number synchronization.
-2025-08-16 14:49:57,514 - INFO - Consulting last authorized invoice...
-2025-08-16 14:49:57,781 - DEBUG - Response: {
-    'PtoVta': 1,
-    'CbteTipo': 6,
-    'CbteNro': 83,
-    'Errors': None,
-    'Events': None
-}
-2025-08-16 14:49:57,781 - INFO - Updated invoice with new number: 84
-2025-08-16 14:49:57,782 - INFO - Error resolved. Retrying invoice submission
-2025-08-16 14:49:57,782 - INFO - Generating invoice...
-2025-08-16 14:49:58,238 - DEBUG - Response: {
-    'FeCabResp': {
-        'Cuit': 20123456789,
-        'PtoVta': 1,
-        'CbteTipo': 6,
-        'FchProceso': '20250816144934',
-        'CantReg': 1,
-        'Resultado': 'A',
-        'Reproceso': 'N'
-    },
-    'FeDetResp': {
-        'FECAEDetResponse': [
-            {
-                'Concepto': 1,
-                'DocTipo': 96,
-                'DocNro': 12345678,
-                'CbteDesde': 84,
-                'CbteHasta': 84,
-                'CbteFch': '20250816',
-                'Resultado': 'A',
-                'Observaciones': None,
-                'CAE': '75332268574214',
-                'CAEFchVto': '20250826'
             }
         ]
     },

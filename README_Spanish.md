@@ -1,7 +1,7 @@
 ![human-coded](https://badgen.net/static/Human%20Coded/100%25/green)
 # Servicio Web SOAP de Facturación para Punto de Venta con Integración a la Agencia Tributaria Argentina
 
-Este sistema es un servicio web que actúa como middleware entre sistemas POS locales y AFIP (Administración Federal de Ingresos Públicos) / ARCA (Agencia de Recaudación y Control Aduanero) el organismo fiscal de Argentina. Recibe comprobantes en formato JSON, los transforma a XML compatible con los Web Services de AFIP/ARCA, envía la solicitud vía SOAP, procesa la respuesta y devuelve el resultado al POS en formato JSON. También resuelve de forma automática ciertos errores comunes de facturación. El objetivo es simplificar el cumplimiento fiscal desde aplicaciones de escritorio.
+Este sistema es un servicio web que actúa como middleware entre sistemas POS locales y AFIP (Administración Federal de Ingresos Públicos) / ARCA (Agencia de Recaudación y Control Aduanero) el organismo fiscal de Argentina. Recibe comprobantes en formato JSON, los transforma a XML compatible con los Web Services de AFIP/ARCA, envía la solicitud vía SOAP, procesa la respuesta y devuelve el resultado al POS en formato JSON. El objetivo es simplificar el cumplimiento fiscal desde aplicaciones de escritorio.
 
 [![Python](https://img.shields.io/badge/python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![lxml](https://img.shields.io/badge/lxml-5.4.0-orange)](https://pypi.org/project/lxml/)
@@ -38,12 +38,10 @@ INVOICE_SERVICE
 │   ├── controllers/
 │   ├── crypto/
 │   ├── payload_builder/
-│   ├── response_errors_handler/
 │   ├── soap_management/
 │   ├── time/
 │   ├── utils/
 │   └── xml_management/
-├── exceptions.py  
 ├── .gitignore  
 ├── main.py  
 ├── README_English.md  
@@ -60,16 +58,13 @@ Contiene el endpoint POST que recibe los JSON con información de la venta y de 
 Contiene los certificados, claves privadas, CSRs y otros elementos criptográficos necesarios para firmar la solicitud del ticket de acceso.
 
 ### `controllers/`
-Contiene controladores separados por servicio SOAP. Cada controlador maneja un servicio específico.
+Contiene controladores separados por método SOAP. Cada controlador maneja un método específico.
 
 ### `crypto/`
 Contiene el módulo que firma la solicitud del ticket de acceso utilizando los elementos de la carpeta `certificates`.
 
 ### `payload_builder/`
 Contiene el módulo que arma y manipula los diccionarios (`dict`) que necesita la librería Zeep para consumir los servicios SOAP.
-
-### `response_errors_handler/`
-Contiene una función que recibe códigos de error y sus respectivos controladores especializados que intentan resolver dichos errores de forma automática. Este módulo puede ampliarse a medida que se descubren nuevos tipos de errores.
 
 ### `soap_management/`
 Maneja la comunicación con los servicios SOAP de AFIP/ARCA y analiza las respuestas en busca de errores. Los errores suelen presentarse como un array al final de la respuesta.
@@ -82,9 +77,6 @@ Contiene funciones auxiliares generales: logger, validación de existencias, ent
 
 ### `xml_management/`
 Almacena los archivos XML necesarios para el funcionamiento del servicio y contiene todas las funciones necesarias para construir y manipular estos archivos.
-
-### `exceptions.py`
-Contiene las excepciones personalizadas del servicio.
 
 ## Dependencias principales
 
@@ -187,8 +179,6 @@ El archivo `soap_client.py` contiene las consultas a 3 de los servicios SOAP de 
     - `token`: Token de acceso vigente.
     - `sign`: Firma digital.
     - `cuit`: CUIT de la empresa emisora.
-  
-  Este servicio se utiliza para solucionar el error `10016` (ver `service/response_errors_handler/error_handler.py`), solicitando el número de comprobante actual para agregarlo a la factura a aprobar luego de que se haya devuelto rechazada con dicho error adjunto.
 
 ---
 
@@ -200,7 +190,7 @@ El archivo `soap_client.py` contiene las consultas a 3 de los servicios SOAP de 
 - **Despliegue flexible:**  
   No es obligatorio usar Docker. El servicio puede ejecutarse directamente como script o dentro de cualquier entorno Python, siempre que se respeten los formatos de los archivos de entrada y salida. La protección de las credenciales (tokens, certificados) es responsabilidad del usuario o administrador del entorno.
 
-### Flujo de vida completo representado con logs (y corrección automática de error incluida)
+### Flujo de vida completo representado con logs
 
 ```
 2025-08-16 14:49:56,869 - INFO - Starting the invoice request process...
@@ -261,59 +251,6 @@ El archivo `soap_client.py` contiene las consultas a 3 de los servicios SOAP de 
                 'Observaciones': None,
                 'CAE': None,
                 'CAEFchVto': None
-            }
-        ]
-    },
-    'Events': None,
-    'Errors': {
-        'Err': [
-            {
-                'Code': 10016,
-                'Msg': 'El numero o fecha del comprobante no se corresponde con el proximo a autorizar. Consultar metodo FECompUltimoAutorizado.'
-            }
-        ]
-    }
-}
-2025-08-16 14:49:57,513 - INFO - Verifying if the response has errors...
-2025-08-16 14:49:57,514 - INFO - Errors identified in the response.
-2025-08-16 14:49:57,514 - INFO - Response has errors. Resolving...
-2025-08-16 14:49:57,514 - DEBUG - Error code: 10016
-2025-08-16 14:49:57,514 - DEBUG - Error message: El numero o fecha del comprobante no se corresponde con el proximo a autorizar. Consultar metodo FECompUltimoAutorizado.
-2025-08-16 14:49:57,514 - INFO - Starting invoice number synchronization.
-2025-08-16 14:49:57,514 - INFO - Consulting last authorized invoice...
-2025-08-16 14:49:57,781 - DEBUG - Response: {
-    'PtoVta': 1,
-    'CbteTipo': 6,
-    'CbteNro': 83,
-    'Errors': None,
-    'Events': None
-}
-2025-08-16 14:49:57,781 - INFO - Updated invoice with new number: 84
-2025-08-16 14:49:57,782 - INFO - Error resolved. Retrying invoice submission
-2025-08-16 14:49:57,782 - INFO - Generating invoice...
-2025-08-16 14:49:58,238 - DEBUG - Response: {
-    'FeCabResp': {
-        'Cuit': 20123456789,
-        'PtoVta': 1,
-        'CbteTipo': 6,
-        'FchProceso': '20250816144934',
-        'CantReg': 1,
-        'Resultado': 'A',
-        'Reproceso': 'N'
-    },
-    'FeDetResp': {
-        'FECAEDetResponse': [
-            {
-                'Concepto': 1,
-                'DocTipo': 96,
-                'DocNro': 12345678,
-                'CbteDesde': 84,
-                'CbteHasta': 84,
-                'CbteFch': '20250816',
-                'Resultado': 'A',
-                'Observaciones': None,
-                'CAE': '75332268574214',
-                'CAEFchVto': '20250826'
             }
         ]
     },
