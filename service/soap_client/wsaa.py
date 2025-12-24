@@ -10,8 +10,8 @@ from zeep import Client
 from zeep.exceptions import Fault, TransportError, XMLSyntaxError
 
 from service.soap_client.format_error import build_error_response
+from service.soap_client.wsdl.wsdl_manager import get_wsaa_wsdl
 from service.utils.logger import logger
-from service.utils.wsdl_manager import get_wsaa_wsdl
 
 afip_wsdl = get_wsaa_wsdl()
 
@@ -38,7 +38,7 @@ def login_cms(b64_cms: str) -> dict:
                 "response" : login_ticket_response
                 }
     
-    except (ConnectionError, Timeout):
+    except (ConnectionError, Timeout) as e:
         return build_error_response(METHOD, "Network error", str(e))
     
     except TransportError as e:
