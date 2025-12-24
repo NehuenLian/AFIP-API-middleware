@@ -9,9 +9,9 @@ from zeep import Client
 from zeep.exceptions import Fault, TransportError, XMLSyntaxError
 
 from service.soap_client.format_error import build_error_response
+from service.soap_client.wsdl.wsdl_manager import get_wsfe_wsdl
 from service.utils.convert_to_dict import convert_zeep_object_to_dict
 from service.utils.logger import logger
-from service.soap_client.wsdl.wsdl_manager import get_wsfe_wsdl
 
 afip_wsdl = get_wsfe_wsdl()
 
@@ -168,7 +168,6 @@ def wsfe_dummy():
     WSFE health cheack
     """
     logger.info(f"Consulting WSFE dummy method (health check)...")
-    afip_wsdl = get_wsfe_wsdl()
 
     try:
         client = Client(wsdl=afip_wsdl)
