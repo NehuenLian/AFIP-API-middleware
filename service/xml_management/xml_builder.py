@@ -69,7 +69,8 @@ def is_expired(xml_name: str) -> bool:
     expiration_time_label = root.find(".//expirationTime")
     expiration_time_str = expiration_time_label.text
 
-    expiration_dt = datetime.strptime(expiration_time_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    expiration_dt_raw = datetime.fromisoformat(expiration_time_str)
+    expiration_dt = expiration_dt_raw.astimezone(timezone.utc)
 
     if actual_dt >= expiration_dt:
         return True
