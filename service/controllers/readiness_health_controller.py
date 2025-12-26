@@ -4,7 +4,7 @@ from service.utils.convert_to_dict import convert_zeep_object_to_dict
 from service.utils.logger import logger
 
 
-def readiness_health_check() -> dict:
+async def readiness_health_check() -> dict:
     logger.debug("Starting readiness health check")
     ntp = ""
 
@@ -21,8 +21,8 @@ def readiness_health_check() -> dict:
         }
         logger.warning("NTP readiness check FAILED")
 
-    # Check WSFE
-    wsfe_health_info = wsfe_dummy()
+    # Check WSFE 
+    wsfe_health_info = await wsfe_dummy()
     wsfe_health_info_parsed = convert_zeep_object_to_dict(wsfe_health_info)
     logger.debug("WSFE dummy check OK")
 
