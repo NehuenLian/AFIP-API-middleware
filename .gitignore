@@ -31,3 +31,7 @@ __pycache__/
 
 # Ignore .coverage file
 .coverage
+
+# Ignore text editor files
+.vscode
+.zed
