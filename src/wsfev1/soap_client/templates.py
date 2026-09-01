@@ -1,17 +1,19 @@
 
-FEDummy = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+WSFEV1_TEMPLATE_PROLOGUE = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
 xmlns:ar="http://ar.gov.afip.dif.FEV1/">
 <soapenv:Header/>
     <soapenv:Body>
-        <ar:FEDummy/>
-    </soapenv:Body>
+"""
+
+WSFEV1_TEMPLATE_EPILOGUE = """    </soapenv:Body>
 </soapenv:Envelope>
 """
 
-FECAESolicitar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEDummy = WSFEV1_TEMPLATE_PROLOGUE + """
+        <ar:FEDummy/>
+""" + WSFEV1_TEMPLATE_EPILOGUE
+
+FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAESolicitar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -146,12 +148,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
         </ar:FECAESolicitar>
     </soapenv:Body>
 </soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECompTotXRequest = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECompTotXRequest = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECompTotXRequest>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -159,14 +158,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FECompTotXRequest>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECompUltimoAutorizado = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECompUltimoAutorizado = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECompUltimoAutorizado>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -176,14 +170,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
             <ar:PtoVta>{{ PtoVta }}</ar:PtoVta>
             <ar:CbteTipo>{{ CbteTipo }}</ar:CbteTipo>
         </ar:FECompUltimoAutorizado>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECompConsultar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECompConsultar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECompConsultar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -196,14 +185,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:PtoVta>{{ FeCompConsReq.PtoVta }}</ar:PtoVta>
             </ar:FeCompConsReq>
         </ar:FECompConsultar>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECAEARegInformativo = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECAEARegInformativo = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAEARegInformativo>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -342,14 +326,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 </ar:FeDetReq>
             </ar:FeCAEARegInfReq>
         </ar:FECAEARegInformativo>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECAEASolicitar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECAEASolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAEASolicitar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -359,14 +338,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
             <ar:Periodo>{{ Periodo }}</ar:Periodo>
             <ar:Orden>{{ Orden }}</ar:Orden>
         </ar:FECAEASolicitar>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECAEASinMovimientoConsultar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECAEASinMovimientoConsultar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAEASinMovimientoConsultar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -376,14 +350,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
             <ar:CAEA>{{ CAEA }}</ar:CAEA>
             <ar:PtoVta>{{ PtoVta }}</ar:PtoVta>
         </ar:FECAEASinMovimientoConsultar>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECAEASinMovimientoInformar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECAEASinMovimientoInformar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAEASinMovimientoInformar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -393,14 +362,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
             <ar:PtoVta>{{ PtoVta }}</ar:PtoVta>
             <ar:CAEA>{{ CAEA }}</ar:CAEA>
         </ar:FECAEASinMovimientoInformar>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FECAEAConsultar = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FECAEAConsultar = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FECAEAConsultar>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -410,14 +374,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Periodo>{{ Periodo }}</ar:Periodo>
                 <ar:Orden>{{ Orden }}</ar:Orden>
         </ar:FECAEAConsultar>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetCotizacion = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetCotizacion = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetCotizacion>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -427,14 +386,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:MonId>{{ MonId }}</ar:MonId>
                 <ar:FchCotiz>{{ FchCotiz }}</ar:FchCotiz>
         </ar:FEParamGetCotizacion>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposTributos = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposTributos = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposTributos>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -442,14 +396,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposTributos>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposMonedas = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposMonedas = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposMonedas>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -457,14 +406,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposMonedas>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposIva = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposIva = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposIva>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -472,14 +416,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposIva>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposOpcional = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposOpcional = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposOpcional>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -487,14 +426,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposOpcional>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposConcepto = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposConcepto = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposConcepto>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -502,14 +436,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposConcepto>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetPtosVenta = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetPtosVenta = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetPtosVenta>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -517,14 +446,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetPtosVenta>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposCbte = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposCbte = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposCbte>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -532,9 +456,7 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposCbte>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
 FEParamGetCondicionIvaReceptor = """<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
 <soap-env:Body>
@@ -552,10 +474,7 @@ FEParamGetCondicionIvaReceptor = """<soap-env:Envelope xmlns:soap-env="http://sc
 </soap-env:Envelope>
 """
 
-FEParamGetTiposDoc = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposDoc = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposDoc>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -563,14 +482,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposDoc>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetTiposPaises = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-    <soapenv:Header/>
-    <soapenv:Body>
+FEParamGetTiposPaises = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetTiposPaises>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -578,14 +492,9 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetTiposPaises>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
 
-FEParamGetActividades = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:ar="http://ar.gov.afip.dif.FEV1/">
-<soapenv:Header/>
-    <soapenv:Body>
+FEParamGetActividades = WSFEV1_TEMPLATE_PROLOGUE + """
         <ar:FEParamGetActividades>
             <ar:Auth>
                 <ar:Token>{{ Auth.Token }}</ar:Token>
@@ -593,6 +502,4 @@ xmlns:ar="http://ar.gov.afip.dif.FEV1/">
                 <ar:Cuit>{{ Auth.Cuit }}</ar:Cuit>
             </ar:Auth>
         </ar:FEParamGetActividades>
-    </soapenv:Body>
-</soapenv:Envelope>
-"""
+""" + WSFEV1_TEMPLATE_EPILOGUE
