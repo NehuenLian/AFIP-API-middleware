@@ -458,6 +458,12 @@ FEParamGetTiposCbte = WSFEV1_TEMPLATE_PROLOGUE + """
         </ar:FEParamGetTiposCbte>
 """ + WSFEV1_TEMPLATE_EPILOGUE
 
+
+# This XML uses different labels so we keep it as default.
+# WSFEV1_TEMPLATE_PROLOGUE and WSFEV1_TEMPLATE_EPILOGUE are NOT used here.
+#
+# Other XMLs: <soapenv:Body> <ar:FEParamGet
+# This XML: <soap-env:Body> <ns0:FEParamGet
 FEParamGetCondicionIvaReceptor = """<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
 <soap-env:Body>
     <ns0:FEParamGetCondicionIvaReceptor xmlns:ns0="http://ar.gov.afip.dif.FEV1/">
