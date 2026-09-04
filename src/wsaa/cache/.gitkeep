@@ -1,0 +1,2 @@
+This folder contains the flag file needed to lock the token generation for other workers.
+Please read src/wsaa/cache/README.md for more info.
