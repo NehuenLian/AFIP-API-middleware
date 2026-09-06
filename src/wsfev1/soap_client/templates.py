@@ -77,7 +77,7 @@ FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Tributos %}
                         <ar:Tributos>
-                            {% for i in item.Tributos %}
+                            {% for i in item.Tributos.Tributo %}
                             <ar:Tributo>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:Desc>{{ i.Desc }}</ar:Desc>
@@ -91,7 +91,7 @@ FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Iva %}
                         <ar:Iva>
-                            {% for i in item.Iva %}
+                            {% for i in item.Iva.AlicIva %}
                             <ar:AlicIva>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:BaseImp>{{ i.BaseImp }}</ar:BaseImp>
@@ -103,7 +103,7 @@ FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Opcionales %}
                         <ar:Opcionales>
-                            {% for i in item.Opcionales %}
+                            {% for i in item.Opcionales.Opcional %}
                             <ar:Opcional>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:Valor>{{ i.Valor }}</ar:Valor>
@@ -114,7 +114,7 @@ FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Compradores %}
                         <ar:Compradores>
-                            {% for i in item.Compradores %}
+                            {% for i in item.Compradores.Comprador %}
                             <ar:Comprador>
                                 <ar:DocTipo>{{ i.DocTipo }}</ar:DocTipo>
                                 <ar:DocNro>{{ i.DocNro }}</ar:DocNro>
@@ -135,7 +135,7 @@ FECAESolicitar = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Actividades %}
                         <ar:Actividades>
-                            {% for i in item.Actividades %}
+                            {% for i in item.Actividades.Actividad %}
                             <ar:Actividad>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                             </ar:Actividad>
