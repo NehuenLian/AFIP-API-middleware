@@ -253,7 +253,7 @@ FECAEARegInformativo = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Tributos %}
                         <ar:Tributos>
-                            {% for i in item.Tributos %}
+                            {% for i in item.Tributos.Tributo %}
                             <ar:Tributo>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:Desc>{{ i.Desc }}</ar:Desc>
@@ -267,7 +267,7 @@ FECAEARegInformativo = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Iva %}
                         <ar:Iva>
-                            {% for i in item.Iva %}
+                            {% for i in item.Iva.AlicIva %}
                             <ar:AlicIva>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:BaseImp>{{ i.BaseImp }}</ar:BaseImp>
@@ -279,7 +279,7 @@ FECAEARegInformativo = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Opcionales %}
                         <ar:Opcionales>
-                            {% for i in item.Opcionales %}
+                            {% for i in item.Opcionales.Opcional %}
                             <ar:Opcional>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                                 <ar:Valor>{{ i.Valor }}</ar:Valor>
@@ -317,7 +317,7 @@ FECAEARegInformativo = WSFEV1_TEMPLATE_PROLOGUE + """
 
                         {% if item.Actividades %}
                         <ar:Actividades>
-                            {% for i in item.Actividades %}
+                            {% for i in item.Actividades.Actividad %}
                             <ar:Actividad>
                                 <ar:Id>{{ i.Id }}</ar:Id>
                             </ar:Actividad>
